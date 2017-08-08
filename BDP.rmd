@@ -1,0 +1,54 @@
+---
+title: "Developing Data Products"
+author: "Roman I Ozerov"
+date: "August 4, 2017"
+output: ioslides_presentation
+---
+Please use PgUp/PgDn to navigate the document
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+library (leaflet)
+```
+
+## NoVa flight schools
+
+This document contains a map of flight schools in Nortern Virginia. By clicking on each map marker, you can see a web site of the appropriate flight school.
+Note that some schools share the same airfield. You need to play with scale to see them all.
+
+## Filght School listing
+
+- Aviation Adventures LLC
+- AV-ED Flight School
+- Potomac Flight Training
+- Atlantic Airways
+- Dulles Aviation Inc
+- Culpeper Regional Airport
+- Sikorsky Aircraft Corporation (at Quantico)
+
+## Map
+
+```{r}
+df <- data.frame(
+  name = c("Aviation Adventures LLC", "AV-ED Flight School", "Potomac Flight Training", 
+           "Atlantic Airways", "Dulles Aviation", "Culpeper Regional Airport", 
+           "Sikorsky at Quantico"),
+  pop = c("KJUO", "KJUO", "Simulator", "KJUO", "KHEF", "KCJR", "KNYG"),
+  lat = c(39.077,39.077,38.590,39.077,38.721,38.525,38.503),
+  lng = c(-77.557,-77.557,-77.250,-77.557,-77.515,-77.859,-77.305)
+  )
+sites <- c(
+  "<a href = 'http://www.aviationadventures.com/'>Aviation Adventures LLC</a>",
+  "<a href = 'http://www.av-ed.com/'>AV-ED Flight School</a>", 
+  "<a href = 'http://www.potomacflighttraining.com/'>Potomac Flight Training</a>", 
+  "<a href = 'http://www.atlantic-airways.com/'>Atlantic Airways</a>",
+  "<a href = 'http://www.dullesaviation.com/'>Dulles Aviation Inc</a>",
+  "<a href = 'http://www.culpeperairport.com/'>Culpeper Regional Airport</a>", 
+  "<a href = 'http://www.lockheedmartin.com/us/what-we-do/aerospace-defense/sikorsky.html'>Sikorsky at Quantico</a>"
+  ) 
+df%>%
+leaflet()%>%
+addTiles()%>%
+addMarkers(popup = sites, clusterOptions = markerClusterOptions())
+```  
+   
